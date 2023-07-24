@@ -8,8 +8,13 @@ router.post("/", (req, res) => {});
 
 router.get("/", async (req, res) => {
   const loc = req.query.location;
-  // Find all cafes based on location
-  const cafes = await db.Cafes.findAll({ where: { location: loc } });
+  let cafes;
+  if (loc) {
+    // Find all cafes based on location
+    cafes = await db.Cafes.findAll({ where: { location: loc } });
+  } else cafes = await db.Cafes.findAll();
+
+  // TODO: format to sort by the highest number of employees first
   res.json(cafes);
 });
 
