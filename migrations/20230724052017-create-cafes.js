@@ -5,7 +5,6 @@ module.exports = {
     await queryInterface.createTable("Cafes", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: DataTypes.UUID,
       },
@@ -14,7 +13,7 @@ module.exports = {
         allowNull: false,
       },
       description: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       logo: {
