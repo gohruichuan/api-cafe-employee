@@ -33,7 +33,7 @@ Your output will be similar to this:
 
 ## Connecting Nodejs to MySQL Database
 
-In **index.js**, please change the **MySQL username and password** according to your local credentials.
+In **util.js**, please change the **MySQL username and password** according to your local credentials.
 
 _For this demo, I will not be using Environment Variables to minimise misconfigurations_
 
