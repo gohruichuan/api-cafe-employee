@@ -36,15 +36,10 @@ fs.readdirSync(__dirname)
       Sequelize.DataTypes
     );
 
-    console.log("model ", model);
-
     db[model.name] = model;
   });
 
 Object.keys(db).forEach((modelName) => {
-  console.log("init associate modelName ", modelName);
-  console.log("init associate ", db[modelName].associate);
-
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }

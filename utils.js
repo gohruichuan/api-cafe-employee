@@ -1,10 +1,12 @@
 const Sequelize = require("sequelize");
+const config = require("./config/config.json");
+const env = process.env.NODE_ENV || "development";
 
 const initDB = () => {
   const sequelize = new Sequelize(
-    "cafemanager", // Database name
-    "root", // MySQL username
-    "root", // MySQL password
+    config[env].database,
+    config[env].username, // MySQL username
+    config[env].password, // MySQL password
     {
       host: "localhost",
       dialect: "mysql",

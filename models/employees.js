@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.STRING(255),
+        primaryKey: true,
         allowNull: false,
       },
       cafeId: {
