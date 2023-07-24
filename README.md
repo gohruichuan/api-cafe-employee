@@ -33,20 +33,20 @@ Your output will be similar to this:
 
 ## Connecting Nodejs to MySQL Database
 
-In **util.js**, please change the **MySQL username and password** according to your local credentials.
+In **config\config.json**, please change the **MySQL username and password** according to your local credentials.
 
 _For this demo, I will not be using Environment Variables to minimise misconfigurations_
 
 ```
-const sequelize = new Sequelize(
-  "cafemanager", // Database name
-  "root", // MySQL username
-  "root", // MySQL password
-  {
-    host: "localhost",
-    dialect: "mysql",
+{
+  "development": {
+    "username": "root", // MySQL username
+    "password": "root", // MySQL password
+    "database": "cafemanager", // Database name
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
-);
+}
 ```
 
 # Installing Dependencies in Nodejs
