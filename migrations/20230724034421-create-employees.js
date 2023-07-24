@@ -4,14 +4,12 @@ module.exports = {
   async up(queryInterface, DataTypes) {
     await queryInterface.createTable("Employees", {
       id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-      },
-      id: {
         type: DataTypes.STRING(255),
         allowNull: false,
+        primaryKey: true,
+      },
+      cafeId: {
+        type: DataTypes.STRING(255),
       },
       name: {
         type: DataTypes.STRING(255),
@@ -26,6 +24,7 @@ module.exports = {
       },
       phone_number: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         validate: {
           is: /^(9|8)/g,
           len: [8, 8],
@@ -33,9 +32,13 @@ module.exports = {
       },
       gender: {
         type: DataTypes.STRING(255),
+        allowNull: false,
         validate: {
           is: /^(Male|Female)/g,
         },
+      },
+      start_date: {
+        type: DataTypes.DATEONLY,
       },
       createdAt: {
         allowNull: false,
