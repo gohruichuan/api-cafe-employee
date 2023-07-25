@@ -72,8 +72,12 @@ router.post("/", async (req, res) => {
 
       res.json(addEmployee);
     } else {
+      console.log("validData ", validData);
       res.status(400);
-      res.send("No cafe found: " + validData.cafeName || validData.cafeId);
+      const cafeIdentifier = isCafeNameQueryExist
+        ? validData.cafeName
+        : validData.cafeId;
+      res.send("No cafe found: " + cafeIdentifier);
       return res;
     }
   } catch (err) {
