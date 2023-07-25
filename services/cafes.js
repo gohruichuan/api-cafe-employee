@@ -5,6 +5,36 @@ const { v4: uuidv4 } = require("uuid");
 
 const router = new express.Router();
 
+router.put("/", async (req, res) => {
+  const payload = req.body;
+
+  const schema = Joi.object({
+    id: Joi.string().required(),
+    name: Joi.string().optional(),
+    description: Joi.string().optional(),
+    logo: Joi.string().optional(),
+    location: Joi.string().optional(),
+  }).required();
+
+  try {
+    const validData = await schema.validateAsync(payload);
+    validData.updatedAt = new Date();
+    console.log("validData ", validData);
+
+    await db.Cafes.update(validData, {
+      where: {
+        id: validData.id,
+      },
+    });
+
+    res.json(validData);
+  } catch (err) {
+    res.status(400);
+    res.send(err);
+    return res;
+  }
+});
+
 router.post("/", async (req, res) => {
   const payload = req.body;
 
