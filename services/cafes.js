@@ -1,6 +1,7 @@
 const Joi = require("joi");
 const express = require("express");
 const db = require("../models/index");
+const { v4: uuidv4 } = require("uuid");
 
 const router = new express.Router();
 
@@ -17,7 +18,13 @@ router.post("/", async (req, res) => {
 
   try {
     const validData = await schema.validateAsync(payload);
-    console.log("validData ", validData);
+    validData.id = uuidv4();
+    validData.createdAt = new Date();
+    validData.updatedAt = new Date();
+
+    const addCafe = await db.Cafes.create(validData);
+
+    res.json(addCafe);
   } catch (err) {
     res.status(400);
     res.send(err);
