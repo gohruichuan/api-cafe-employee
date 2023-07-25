@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
   let cafes;
   const query = req.query.location;
 
-  const schema = Joi.string().optional();
+  const schema = Joi.string().allow("");
 
   try {
     const loc = await schema.validateAsync(query);
