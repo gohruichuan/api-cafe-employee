@@ -4,8 +4,25 @@ const db = require("../models/index");
 
 const router = new express.Router();
 
-router.post("/", (req, res) => {
-  const body = req.body;
+router.post("/", async (req, res) => {
+  const payload = req.body;
+  console.log("payload ", payload);
+
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+    logo: Joi.string().optional(),
+    location: Joi.string().required(),
+  }).required();
+
+  try {
+    const validData = await schema.validateAsync(payload);
+    console.log("validData ", validData);
+  } catch (err) {
+    res.status(400);
+    res.send(err);
+    return res;
+  }
 });
 
 router.get("/", async (req, res) => {
