@@ -16,6 +16,36 @@ const formatEmployeeId = () => {
   return "UI" + hexString.slice(0, 8).toUpperCase();
 };
 
+router.delete("/", async (req, res) => {
+  const payload = req.body;
+
+  const schema = Joi.object({
+    id: Joi.string().required(),
+  }).required();
+
+  try {
+    const validData = await schema.validateAsync(payload);
+
+    const delEmployee = await db.Employees.destroy({
+      where: {
+        id: validData.id,
+      },
+    });
+
+    if (delEmployee !== 0) {
+      res.json(validData);
+    } else {
+      res.status(400);
+      res.send("No such employee: " + validData.id);
+      return res;
+    }
+  } catch (err) {
+    res.status(400);
+    res.send(err);
+    return res;
+  }
+});
+
 router.put("/", async (req, res) => {
   const payload = req.body;
 
