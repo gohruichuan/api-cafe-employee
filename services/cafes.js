@@ -21,13 +21,19 @@ router.put("/", async (req, res) => {
     validData.updatedAt = new Date();
     console.log("validData ", validData);
 
-    await db.Cafes.update(validData, {
+    const updCafe = await db.Cafes.update(validData, {
       where: {
         id: validData.id,
       },
     });
 
-    res.json(validData);
+    if (updCafe[0] !== 0) {
+      res.json(validData);
+    } else {
+      res.status(400);
+      res.send("No such cafe: " + validData.id);
+      return res;
+    }
   } catch (err) {
     res.status(400);
     res.send(err);

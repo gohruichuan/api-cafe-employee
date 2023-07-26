@@ -16,6 +16,51 @@ const formatEmployeeId = () => {
   return "UI" + hexString.slice(0, 8).toUpperCase();
 };
 
+router.put("/", async (req, res) => {
+  const payload = req.body;
+
+  const schema = Joi.object({
+    id: Joi.string().required(),
+    name: Joi.string().optional(),
+    cafeId: Joi.string().optional(),
+    email_address: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        tlds: { allow: ["com", "net"] },
+      })
+      .optional(),
+    phone_number: Joi.string()
+      .pattern(/^(9|8)/)
+      .length(8)
+      .optional(),
+    gender: Joi.string().optional(),
+    start_date: Joi.string().optional(),
+  }).required();
+
+  try {
+    const validData = await schema.validateAsync(payload);
+    validData.updatedAt = new Date();
+
+    const updEmployeeData = await db.Employees.update(validData, {
+      where: {
+        id: validData.id,
+      },
+    });
+
+    if (updEmployeeData[0] !== 0) {
+      res.json(validData);
+    } else {
+      res.status(400);
+      res.send("No such employee: " + validData.id);
+      return res;
+    }
+  } catch (err) {
+    res.status(400);
+    res.send(err);
+    return res;
+  }
+});
+
 router.post("/", async (req, res) => {
   const payload = req.body;
 
@@ -23,10 +68,12 @@ router.post("/", async (req, res) => {
     Joi.object({
       name: Joi.string().required(),
       cafeId: Joi.string().optional(),
-      email_address: Joi.string().email({
-        minDomainSegments: 2,
-        tlds: { allow: ["com", "net"] },
-      }),
+      email_address: Joi.string()
+        .email({
+          minDomainSegments: 2,
+          tlds: { allow: ["com", "net"] },
+        })
+        .required(),
       phone_number: Joi.string()
         .pattern(/^(9|8)/)
         .length(8)
@@ -36,10 +83,12 @@ router.post("/", async (req, res) => {
     Joi.object({
       name: Joi.string().required(),
       cafeName: Joi.string().optional(),
-      email_address: Joi.string().email({
-        minDomainSegments: 2,
-        tlds: { allow: ["com", "net"] },
-      }),
+      email_address: Joi.string()
+        .email({
+          minDomainSegments: 2,
+          tlds: { allow: ["com", "net"] },
+        })
+        .required(),
       phone_number: Joi.string()
         .pattern(/^(9|8)/)
         .length(8)
