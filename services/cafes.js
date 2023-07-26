@@ -5,6 +5,36 @@ const { v4: uuidv4 } = require("uuid");
 
 const router = new express.Router();
 
+router.delete("/", async (req, res) => {
+  const payload = req.body;
+
+  const schema = Joi.object({
+    id: Joi.string().required(),
+  }).required();
+
+  try {
+    const validData = await schema.validateAsync(payload);
+
+    const delCafe = await db.Cafes.destroy({
+      where: {
+        id: validData.id,
+      },
+    });
+
+    if (delCafe !== 0) {
+      res.json(validData);
+    } else {
+      res.status(400);
+      res.send("No such cafe: " + validData.id);
+      return res;
+    }
+  } catch (err) {
+    res.status(400);
+    res.send(err);
+    return res;
+  }
+});
+
 router.put("/", async (req, res) => {
   const payload = req.body;
 
