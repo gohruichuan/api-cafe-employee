@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       logo: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       location: {
         type: DataTypes.STRING(255),
