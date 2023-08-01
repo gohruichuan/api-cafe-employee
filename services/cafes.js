@@ -37,12 +37,13 @@ router.delete("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
   const payload = req.body;
+  if (!payload.logo) payload.logo = "";
 
   const schema = Joi.object({
     id: Joi.string().required(),
     name: Joi.string().optional(),
     description: Joi.string().optional(),
-    logo: Joi.string().optional(),
+    logo: Joi.string().optional().allow(""),
     location: Joi.string().optional(),
   }).required();
 
