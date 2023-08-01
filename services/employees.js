@@ -186,17 +186,17 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const query = req.query.cafe;
+  const query = req.query.cafeId;
   let employees;
   const schema = Joi.string().optional();
 
   try {
-    const cafeName = await schema.validateAsync(query);
-    if (cafeName) {
+    const cafeId = await schema.validateAsync(query);
+    if (cafeId) {
       // Find all cafes with cafeName
       let cafe = await db.Cafes.findOne({
         raw: true,
-        where: { name: cafeName },
+        where: { id: cafeId },
       });
 
       if (cafe) {
