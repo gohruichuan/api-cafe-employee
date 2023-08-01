@@ -16,6 +16,25 @@ const formatEmployeeId = () => {
   return "UI" + hexString.slice(0, 8).toUpperCase();
 };
 
+const findCafeName = (employee, cafes) => {
+  const cafeData = cafes.find((cafe) => cafe.id === employee.cafeId);
+  return cafeData?.name;
+};
+
+const formatDaysWorked = (employees, cafe) => {
+  employees.map((employee) => {
+    const currentTime = new Date().getTime();
+    const employeeTime = new Date(employee.start_date).getTime();
+
+    const timeDiffInDays = convetToDays(currentTime - employeeTime);
+    employee.days_worked = timeDiffInDays;
+    employee.cafe_name = cafe.name ? cafe.name : findCafeName(employee, cafe);
+    return employee;
+  });
+
+  return employees;
+};
+
 router.delete("/", async (req, res) => {
   const payload = req.body;
 
@@ -186,23 +205,20 @@ router.get("/", async (req, res) => {
           raw: true,
           where: { cafeId: cafe.id },
         });
-        console.log("employees ", employees);
-
-        // Format days_worked and cafe for employees
-        employees.map((employee) => {
-          const currentTime = new Date().getTime();
-          const employeeTime = new Date(employee.start_date).getTime();
-
-          const timeDiffInDays = convetToDays(currentTime - employeeTime);
-          employee.days_worked = timeDiffInDays;
-          employee.cafe = cafe.name;
-        });
-        res.json(employees);
+        res.json(formatDaysWorked(employees, cafe));
       } else {
         res.status(400);
         res.send("No cafe found: " + cafeName);
         return res;
       }
+    } else {
+      cafes = await db.Cafes.findAll({
+        raw: true,
+      });
+      employees = await db.Employees.findAll({
+        raw: true,
+      });
+      res.json(formatDaysWorked(employees, cafes));
     }
   } catch (err) {
     res.status(400);
