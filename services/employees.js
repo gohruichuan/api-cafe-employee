@@ -66,18 +66,18 @@ router.delete("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
   const payload = req.body;
+  if (!payload.cafeId) payload.cafeId = "";
 
   const schema = Joi.object({
     id: Joi.string().required(),
     name: Joi.string().optional(),
-    cafeId: Joi.string().optional(),
+    cafeId: Joi.string().optional().allow(""),
     email_address: Joi.string().optional(),
     phone_number: Joi.string()
       .pattern(/^(9|8)/)
       .length(8)
       .optional(),
     gender: Joi.string().optional(),
-    start_date: Joi.string().optional(),
   }).required();
 
   try {
