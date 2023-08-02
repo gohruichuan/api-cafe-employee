@@ -25,9 +25,8 @@ const formatDaysWorked = (employees, cafe) => {
   employees.map((employee) => {
     const currentTime = new Date().getTime();
     const employeeTime = new Date(employee.start_date).getTime();
-
     const timeDiffInDays = convetToDays(currentTime - employeeTime);
-    employee.days_worked = timeDiffInDays;
+    employee.days_worked = employeeTime === 0 ? 0 : timeDiffInDays;
     employee.cafe_name = cafe.name ? cafe.name : findCafeName(employee, cafe);
     return employee;
   });
