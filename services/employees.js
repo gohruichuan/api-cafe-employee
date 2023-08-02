@@ -72,12 +72,7 @@ router.put("/", async (req, res) => {
     id: Joi.string().required(),
     name: Joi.string().optional(),
     cafeId: Joi.string().optional(),
-    email_address: Joi.string()
-      .email({
-        minDomainSegments: 2,
-        tlds: { allow: ["com", "net"] },
-      })
-      .optional(),
+    email_address: Joi.string().optional(),
     phone_number: Joi.string()
       .pattern(/^(9|8)/)
       .length(8)
@@ -113,71 +108,35 @@ router.put("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const payload = req.body;
 
-  const schema = Joi.alternatives([
-    Joi.object({
-      name: Joi.string().required(),
-      cafeId: Joi.string().optional(),
-      email_address: Joi.string()
-        .email({
-          minDomainSegments: 2,
-          tlds: { allow: ["com", "net"] },
-        })
-        .required(),
-      phone_number: Joi.string()
-        .pattern(/^(9|8)/)
-        .length(8)
-        .required(),
-      gender: Joi.string().required(),
-    }).optional(),
-    Joi.object({
-      name: Joi.string().required(),
-      cafeName: Joi.string().optional(),
-      email_address: Joi.string()
-        .email({
-          minDomainSegments: 2,
-          tlds: { allow: ["com", "net"] },
-        })
-        .required(),
-      phone_number: Joi.string()
-        .pattern(/^(9|8)/)
-        .length(8)
-        .required(),
-      gender: Joi.string().required(),
-    }).optional(),
-  ]);
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    cafeId: Joi.string().optional(),
+    email_address: Joi.string().required(),
+    phone_number: Joi.string()
+      .pattern(/^(9|8)/)
+      .length(8)
+      .required(),
+    gender: Joi.string().required(),
+  }).optional();
 
   try {
     const validData = await schema.validateAsync(payload);
-    const isCafeNameQueryExist = validData.cafeName ? true : false;
 
-    const query = isCafeNameQueryExist
-      ? {
-          name: validData.cafeName,
-        }
-      : {
-          id: validData.cafeId,
-        };
+    if (validData.cafeId) {
+      const query = {
+        id: validData.cafeId,
+      };
 
-    const cafe = await db.Cafes.findOne({ raw: true, where: query });
-
-    if (cafe) {
-      validData.id = formatEmployeeId();
+      const cafe = await db.Cafes.findOne({ raw: true, where: query });
       validData.cafeId = cafe.id;
-      validData.createdAt = new Date();
-      validData.updatedAt = new Date();
-
-      const addEmployee = await db.Employees.create(validData);
-
-      res.json(addEmployee);
-    } else {
-      console.log("validData ", validData);
-      res.status(400);
-      const cafeIdentifier = isCafeNameQueryExist
-        ? validData.cafeName
-        : validData.cafeId;
-      res.send("No cafe found: " + cafeIdentifier);
-      return res;
     }
+
+    validData.id = formatEmployeeId();
+    validData.createdAt = new Date();
+    validData.updatedAt = new Date();
+
+    const addEmployee = await db.Employees.create(validData);
+    res.json(addEmployee);
   } catch (err) {
     res.status(400);
     res.send(err);
