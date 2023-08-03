@@ -63,7 +63,7 @@ To create Cafes and Employees Table
 
 > npx sequelize-cli db:migrate
 
-## Undo MySQL Migrations
+## Undo MySQL Migrations (optional)
 
 To undo the creation of Cafes and Employees Table
 
@@ -77,7 +77,7 @@ To import data into Cafes and Employees Table
 
 > npx sequelize-cli db:seed:all
 
-# Undo MySQL Seeds
+## Undo MySQL Seeds (optional)
 
 To undo data from Cafes and Employees Table
 
