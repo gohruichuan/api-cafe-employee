@@ -12,11 +12,11 @@ The MySQL server will ask for your database password. Type your password and pre
 
 Once you’re logged in, use the **MySQL CLI** create a database called cafemanager using the following command:
 
-> mysql> CREATE DATABASE cafemanager;
+> $ mysql> CREATE DATABASE cafemanager;
 
 To verify whether you have created the database successfully, you can use this command:
 
-> mysql> SHOW DATABASES;
+> $ mysql> SHOW DATABASES;
 
 Your output will be similar to this:
 
