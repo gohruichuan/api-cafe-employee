@@ -14,7 +14,7 @@ module.exports = {
       },
       {
         id: "32188fd0-e03f-486c-b952-f774ca2af7d1",
-        name: "Stanley Cafe",
+        name: "Stan Cafe",
         description: "Sell Breads",
         location: "ang mo kio",
         createdAt: new Date(),
@@ -22,7 +22,7 @@ module.exports = {
       },
       {
         id: "5088f8f4-e9a5-46f1-8760-772f0c3709b8",
-        name: "Richard Cafe",
+        name: "Rich Cafe",
         description: "Sell Brunch",
         location: "sengkang",
         createdAt: new Date(),
@@ -38,7 +38,7 @@ module.exports = {
       },
       {
         id: "32fc99bc-bdd7-49d1-b2a9-e039c74104c0",
-        name: "Monster Cafe",
+        name: "Mon Cafe",
         description: "Sell Monster Curry",
         location: "orchard",
         createdAt: new Date(),
@@ -46,7 +46,7 @@ module.exports = {
       },
       {
         id: "3fee314b-7775-4a86-bab8-8f7b8abc98e3",
-        name: "Pasir Ris Cafe",
+        name: "Pas Cafe",
         description: "Sell Biscuits",
         location: "pasir ris",
         createdAt: new Date(),

@@ -55,7 +55,35 @@ To install dependencies, run the following:
 
 > npm install
 
-# To start Nodejs
+# MySQL Migrations
+
+## Run MySQL Migrations
+
+To create Cafes and Employees Table
+
+> npx sequelize-cli db:migrate
+
+## Undo MySQL Migrations
+
+To undo the creation of Cafes and Employees Table
+
+> npx sequelize-cli db:migrate:undo:all
+
+# MySQL Seeds
+
+## Run MySQL Seeds
+
+To import data into Cafes and Employees Table
+
+> npx sequelize-cli db:seed:all
+
+# Undo MySQL Seeds
+
+To undo data from Cafes and Employees Table
+
+> npx sequelize-cli db:seed:undo:all
+
+# To start Nodejs API
 
 To install dependencies, run the following:
 
