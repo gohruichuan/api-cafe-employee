@@ -9,7 +9,7 @@ module.exports = {
         type: DataTypes.UUID,
       },
       name: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(10),
         allowNull: false,
       },
       description: {

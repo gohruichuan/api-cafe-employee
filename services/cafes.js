@@ -41,7 +41,7 @@ router.put("/", async (req, res) => {
 
   const schema = Joi.object({
     id: Joi.string().required(),
-    name: Joi.string().optional(),
+    name: Joi.string().min(6).max(10).optional(),
     description: Joi.string().optional(),
     logo: Joi.string().optional().allow(""),
     location: Joi.string().optional(),
@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
   const payload = req.body;
   console.log("payload ", payload);
   const schema = Joi.object({
-    name: Joi.string().required(),
+    name: Joi.string().min(6).max(10).required(),
     description: Joi.string().required(),
     logo: Joi.string().optional(),
     location: Joi.string().required(),

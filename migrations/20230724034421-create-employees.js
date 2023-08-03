@@ -14,7 +14,7 @@ module.exports = {
           type: DataTypes.STRING(255),
         },
         name: {
-          type: DataTypes.STRING(255),
+          type: DataTypes.STRING(10),
           allowNull: false,
         },
         email_address: {
